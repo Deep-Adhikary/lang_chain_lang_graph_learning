@@ -7,8 +7,9 @@ from langchain.agents.middleware import (
 )
 from langchain.agents.structured_output import ToolStrategy
 from langchain.messages import HumanMessage, SystemMessage, ToolMessage
+from rich import print
 
-from memory.memory_via_middleware import CustomStateMiddleware
+from memory.memory_via_middleware import CustomState
 from models import nova_micro, nova_pro
 from tools.dog_info import DogInfo, get_dog_info
 
@@ -67,13 +68,10 @@ if __name__ == "__main__":
     agent = create_agent(
         model=nova_micro,
         system_prompt=get_system_prompt(),
-        middleware=[
-            dynamic_model_selection_by_meesage_length,
-            handel_tool_errors,
-            CustomStateMiddleware(),
-        ],
+        middleware=[dynamic_model_selection_by_meesage_length, handel_tool_errors],
         tools=[get_dog_info],
         response_format=ToolStrategy(DogInfo),
+        state_schema=CustomState,
     )
     query = create_human_message("Tell me about Afghan Hound.")
     # print(query)
