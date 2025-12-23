@@ -6,11 +6,84 @@ authors = [
     { name = "Deep Adhikary", email = "deep.adhikary@genomicsengland.co.uk" },
 ]
 readme = "README.md"
-requires-python = "3.11.14"
-dependencies = ["langchain (>=1.2.0,<2.0.0)", "langchain-aws (>=1.1.0,<2.0.0)", "langgraph (>=1.0.5,<2.0.0)", "requests (>=2.32.5,<3.0.0)", "rich (>=14.2.0,<15.0.0)"]
+requires-python = ">=3.11"
+dependencies = [
+    "langchain (>=1.2.0,<2.0.0)",
+    "langchain-aws (>=1.1.0,<2.0.0)",
+    "langgraph (>=1.0.5,<2.0.0)",
+    "requests (>=2.32.5,<3.0.0)",
+    "rich (>=14.2.0,<15.0.0)",
+    "ruff (>=0.14.10,<0.15.0)",
+    "mypy (>=1.19.1,<2.0.0)",
+]
 [tool.poetry]
 package-mode = false
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+fix = true
+show-fixes = true
+
+exclude = [".venv", "node_modules", "__pycache__", ".git", ".mypy_cache"]
+
+[tool.ruff.lint]
+select = [
+    # Core Flake8
+    "E", # pycodestyle errors
+    "W", # pycodestyle warnings
+    "F", # pyflakes
+
+    # Strongly recommended
+    "B",   # flake8-bugbear
+    "I",   # isort
+    "UP",  # pyupgrade
+    "SIM", # flake8-simplify
+    "C4",  # flake8-comprehensions
+    "RET", # flake8-return
+]
+
+ignore = [
+    "E501", # line-length handled separately
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["agent", "core"]
+combine-as-imports = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+
+warn_unused_configs = true
+warn_return_any = true
+warn_unreachable = true
+warn_redundant_casts = true
+
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+
+no_implicit_optional = true
+strict_equality = true
+
+pretty = true
+show_error_codes = true
+show_column_numbers = true
+
+# Async / agent friendliness
+allow_redefinition = false
+
+# Ignore noisy third-party libs
+[[tool.mypy.overrides]]
+module = ["langchain.*", "langgraph.*", "chromadb.*", "faiss.*", "mcp.*"]
+ignore_missing_imports = true
