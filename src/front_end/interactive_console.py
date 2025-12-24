@@ -26,6 +26,6 @@ def interactive_console(agent):
 
             # Display agent response
             last_message = result["messages"][-1]
-            print(f"\nAgent: {last_message.content}")
+            last_message.pretty_print()
         except Exception as e:
             print(f"\nError: {e}")
