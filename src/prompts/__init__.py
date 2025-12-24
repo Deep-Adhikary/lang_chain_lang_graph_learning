@@ -1,3 +1,4 @@
+from .abusive_checker_prompt import abusive_checker_prompt
 from .system_prompts import (
     angry_mood_system_prompt,
     angry_mood_system_prompt_agent_fault,
@@ -14,4 +15,5 @@ __all__ = [
     "happy_mood_system_prompt",
     "base_neutral_promnpt",
     "sad_mood_system_prompt_agent_fault",
+    "abusive_checker_prompt",
 ]

@@ -1,11 +1,13 @@
 from langchain.agents import create_agent
 from langchain.agents.middleware import ModelRequest, dynamic_prompt
-from langchain.messages import HumanMessage
+
+# from langchain.messages import HumanMessage
 from langgraph.checkpoint.memory import InMemorySaver
 from rich import print  # pylint: disable=redefined-builtin
 
 from src import base_model
 from src.front_end import interactive_console
+from src.guardrails import check_abusive_service
 from src.prompts import (
     angry_mood_system_prompt,
     angry_mood_system_prompt_agent_fault,
@@ -40,7 +42,7 @@ def user_moode_based_prompt(request: ModelRequest) -> str:
 simple_agent = create_agent(
     model=base_model,
     checkpointer=InMemorySaver(),
-    middleware=[MoodMiddleware(), user_moode_based_prompt],
+    middleware=[check_abusive_service, MoodMiddleware(), user_moode_based_prompt],
 )
 
 
