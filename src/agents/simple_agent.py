@@ -17,6 +17,7 @@ from src.prompts import (
     sad_mood_system_prompt_agent_fault,
 )
 from src.states.mood import MoodMiddleware
+from src.tools import get_air_quality, get_geolocation_by_city, get_weather
 
 
 @dynamic_prompt
@@ -43,6 +44,7 @@ simple_agent = create_agent(
     model=base_model,
     checkpointer=InMemorySaver(),
     middleware=[check_abusive_service, MoodMiddleware(), user_moode_based_prompt],
+    tools=[get_air_quality, get_weather, get_geolocation_by_city],
 )
 
 

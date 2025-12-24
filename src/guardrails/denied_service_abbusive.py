@@ -7,7 +7,7 @@ from langgraph.runtime import Runtime
 from pydantic import BaseModel
 from rich import print  # pylint: disable=redefined-builtin
 
-from src.configs import AWSConfig, OllamaConfig, nova_lite_config, qwen_3_config
+from src.configs import OllamaConfig, qwen_3_config
 from src.prompts import abusive_checker_prompt
 
 
